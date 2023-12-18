@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\Gate;
 class AuthServiceProvider extends ServiceProvider
 {
     public static $permission = [
-        'dashboard' => ['superadmin', 'admin'],
-        'user-index' => ['admin'],
-        'payment-update' => ['superadmin'],
+        'dashboard' => ['ADMIN', 'STAFF'],
+        'user-index' => ['STAFF'],
     ];
     /**
      * The model to policy mappings for the application.
@@ -27,12 +26,12 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        foreach(self::$permission as $feature => $roles) {
-            Gate::define($feature, function(User $user) use ($roles) {
-            if (in_array($user->role, $roles)) {
-                return true;
-            }
-        });
+        foreach(self::$permission as $feature => $roless) {
+            Gate::define($feature, function(User $user) use ($roless){
+                if (in_array($user->roles, $roless)) {
+                    return true;
+                }
+            });
         }
 
 

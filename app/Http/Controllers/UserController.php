@@ -2,70 +2,71 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        // $users = User::paginate(10);
         $users =  DB::table('users')
         ->when($request->input('search'), function($query, $search){
-            $query->where('name', 'like','%'. $search . '%');
-        })->paginate(10);
+            $query->where('name', 'like','%'. $search . '%')
+                  ->orWhere('email', 'like','%'. $search . '%')
+                  ->orWhere('phone', 'like','%'. $search . '%');
+        })
+        ->orderBy('id','desc')
+        ->paginate(10);
         return view('pages.user.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
+
     public function create()
     {
-        //
+        return view('pages.user.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function store(StoreUserRequest $request)
     {
-        //
+
+        // dd($request->all());
+
+        $data = $request->all();
+        $data['password']=Hash::make($request->password);
+        \App\Models\User::create($data);
+        return redirect()->route('user.index')->with('success','User successfully created');
     }
 
-    /**
-     * Display the specified resource.
-     */
+
+
     public function show(User $user)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = \App\Models\User::findOrFail($id);
+        return view('pages.user.edit', compact('user'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
-        //
+        // dd($request->validated());
+
+        $data = $request->validated();
+        $user->update($data);
+        return redirect()->route('user.index')->with('success', 'User successfully update');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return redirect()->route('user.index')->with('success', 'User successfully deleted');
     }
 }

@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages.auth.login', ['type_menu' => '']);
+    return view('pages.auth.login');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -30,24 +30,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('user', UserController::class);
 });
-
-
-// Route::get('/login', function () {
-//     return view('pages.auth.login');
-// });
-
-// Route::get('/register', function () {
-//     return view('pages.auth.register');
-// });
-
-// Route::get('/reset', function () {
-//     return view('pages.auth.reset');
-// });
-
-// Route::get('/forgot', function () {
-//     return view('pages.auth.forgot');
-// });
-
-// Route::get('/verify', function () {
-//     return view('pages.auth.verify');
-// });

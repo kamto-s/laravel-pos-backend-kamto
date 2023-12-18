@@ -21,5 +21,9 @@
                 <a class="nav-link" href="{{ route('user.index') }}"><i class="fas fa-users"></i> <span>User
                         List</span></a>
             </li>
+
+            {{-- <li class="nav-item">
+                <a class="nav-link" href="#"><i class="fas fa-users"></i> <span>Products</span></a>
+            </li> --}}
     </aside>
 </div>
