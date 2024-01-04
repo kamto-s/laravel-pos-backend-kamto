@@ -22,8 +22,9 @@
                         List</span></a>
             </li>
 
-            {{-- <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fas fa-users"></i> <span>Products</span></a>
-            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('product.index') }}"><i class="fas fa-basket-shopping"></i>
+                    <span>Products</span></a>
+            </li>
     </aside>
 </div>

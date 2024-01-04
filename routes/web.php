@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,4 +30,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('profile.edit');
 
     Route::resource('user', UserController::class);
+
+    Route::resource('product', \App\Http\Controllers\ProductController::class);
 });
+

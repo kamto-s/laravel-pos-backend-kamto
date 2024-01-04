@@ -24,8 +24,6 @@ class UserController extends Controller
         return view('pages.user.index', compact('users'));
     }
 
-
-
     public function create()
     {
         return view('pages.user.create');
@@ -35,7 +33,6 @@ class UserController extends Controller
     {
 
         // dd($request->all());
-
         $data = $request->all();
         $data['password']=Hash::make($request->password);
         \App\Models\User::create($data);
