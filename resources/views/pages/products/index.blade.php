@@ -51,6 +51,7 @@
                                     <table class="table-striped table">
                                         <tr>
                                             <th>No</th>
+                                            <th>Photo</th>
                                             <th>Name</th>
                                             <th>Price</th>
                                             <th>Stock</th>
@@ -60,6 +61,14 @@
                                         @foreach ($products as $index => $product)
                                             <tr>
                                                 <td>{{ $index + $products->firstItem() }}</td>
+                                                <td>
+                                                    @if ($product->image)
+                                                        <img src="{{ asset('storage/products/' . $product->image) }}"
+                                                            alt="" width="100px" class="img-thumbnail">
+                                                    @else
+                                                        <span class="badge badge-danger">No Image</span>
+                                                    @endif
+                                                </td>
                                                 <td>{{ $product->name }}</td>
                                                 <td>@currency($product->price)</td>
                                                 <td>{{ $product->stock }}</td>

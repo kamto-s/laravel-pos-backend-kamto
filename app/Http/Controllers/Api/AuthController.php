@@ -48,7 +48,7 @@ class AuthController extends Controller
         //
     }
 
-
+    //login
     public function login(Request $request)
     {
         $loginData=$request->validate([
@@ -77,5 +77,14 @@ class AuthController extends Controller
             'token' => $token,
         ], 200);
 
+    }
+
+    // logout
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return response()->json([
+            'message' => 'Logout success',
+        ]);
     }
 }
